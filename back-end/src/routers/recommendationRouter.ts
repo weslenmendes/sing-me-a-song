@@ -11,4 +11,8 @@ recommendationRouter.get("/:id", recommendationController.getById);
 recommendationRouter.post("/:id/upvote", recommendationController.upvote);
 recommendationRouter.post("/:id/downvote", recommendationController.downvote);
 
+if (process.env.NODE_ENV === "test") {
+  recommendationRouter.post("/reset", recommendationController.removeAll);
+}
+
 export default recommendationRouter;
