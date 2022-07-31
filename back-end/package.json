@@ -11,12 +11,14 @@
     "prisma": "echo y prisma migrate reset --force",
     "prisma-seed": "prisma db seed",
     "prisma:test": "dotenv -e .env.test prisma migrate dev",
-    "test": "dotenv -e .env.test npm run prisma && cross-env NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- --coverage -e -i"
+    "test": "dotenv -e .env.test npm run prisma && cross-env NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- --coverage -e -i",
+    "test:unit": "dotenv -e .env.test cross-env NODE_OPTIONS=--experimental-vm-modules jest -- -i --coverage --testPathPattern=tests/unit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
