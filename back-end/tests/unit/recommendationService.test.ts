@@ -227,7 +227,7 @@ describe("Recommendation service test suite", () => {
         .mockResolvedValueOnce(foundedRecommendation);
 
       const result = await recommendationService.getById(
-        foundedRecommendation.id,
+        foundedRecommendation.id
       );
 
       expect(result).toEqual(foundedRecommendation);

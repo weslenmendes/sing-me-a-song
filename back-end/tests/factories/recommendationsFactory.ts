@@ -19,7 +19,7 @@ export interface IOptions {
   };
 }
 
-interface IRecommendation {
+export interface IRecommendation {
   name: string;
   youtubeLink: string;
 }
@@ -54,6 +54,33 @@ const createARecommendation = (): IRecommendation => {
   return {
     name,
     youtubeLink,
+  };
+};
+
+const createARecommendationWithoutName = (): IRecommendation => {
+  const youtubeLink = URL_YOUTUBE + faker.random.alphaNumeric(6);
+
+  return {
+    name: "",
+    youtubeLink,
+  };
+};
+
+const createARecommendationWithoutLink = (): IRecommendation => {
+  const name = faker.music.songName();
+
+  return {
+    name,
+    youtubeLink: "",
+  };
+};
+
+const createARecommendationWithInvalidLink = (): IRecommendation => {
+  const name = faker.music.songName();
+
+  return {
+    name,
+    youtubeLink: "https://www.driven.com.br/",
   };
 };
 
@@ -96,6 +123,9 @@ const higherRecommendation = () => {
 export default {
   createARecommendation,
   createARecommendationData,
+  createARecommendationWithoutName,
+  createARecommendationWithoutLink,
+  createARecommendationWithInvalidLink,
   lowerRecommendation,
   higherRecommendation,
 };
