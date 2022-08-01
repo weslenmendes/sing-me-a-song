@@ -8,6 +8,7 @@ import { recommendationRepository } from "../../src/repositories/recommendationR
 import recommendationsFactory, {
   IOptions,
 } from "../factories/recommendationsFactory.js";
+import * as scenarioUtils from "./../utils/scenariosUtils.js";
 
 jest.mock("../../src/repositories/recommendationRepository");
 
@@ -318,17 +319,6 @@ describe("Recommendation service test suite", () => {
 
       expect(result).toEqual(recommendationInTop);
       expect(recommendationRepository.getAmountByScore).toBeCalled();
-    });
-  });
-
-  describe("remove all recommendations", () => {
-    it("should be able to remove all recommendations", async () => {
-      jest.spyOn(recommendationRepository, "removeAll").mockResolvedValue(null);
-
-      const result = await recommendationService.removeAll();
-
-      expect(result).toBeNull;
-      expect(recommendationRepository.removeAll).toBeCalledTimes(1);
     });
   });
 });

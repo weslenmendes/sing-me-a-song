@@ -1,18 +1,10 @@
 import recommendationsFactory from "../factories/recommendationsFactory.js";
-import prisma from "../../src/database.js";
+import { testRepository } from "./../../src/repositories/testRepository.js";
 
 export const createScenarioWithARecommendation = async () => {
   const recommendation = recommendationsFactory.createARecommendation();
 
-  const createRecommendation = await prisma.recommendation.create({
-    data: recommendation,
-    select: {
-      id: true,
-      name: true,
-      youtubeLink: true,
-      score: true,
-    },
-  });
+  const createRecommendation = await testRepository.create(recommendation);
 
   return createRecommendation;
 };
@@ -22,17 +14,9 @@ export const createScenarioWithARecommendationSpecificVote = async (
 ) => {
   const recomendation = recommendationsFactory.createARecommendation();
 
-  const createRecommendation = await prisma.recommendation.create({
-    data: {
-      ...recomendation,
-      score: vote,
-    },
-    select: {
-      id: true,
-      name: true,
-      youtubeLink: true,
-      score: true,
-    },
+  const createRecommendation = await testRepository.create({
+    ...recomendation,
+    score: vote,
   });
 
   return createRecommendation;
@@ -47,7 +31,7 @@ export const createScenarioWithManyRecomendations = async (total: number) => {
     allRecommendations.push(recommendation);
   }
 
-  await prisma.recommendation.createMany({ data: allRecommendations });
+  await testRepository.createMany(allRecommendations);
 };
 
 function getScore(minScore: number, maxScore: number) {
@@ -81,5 +65,5 @@ export async function createScenarioWithManyAmountsAndDistribuitedScore(
   createMultipleData(highScoreAmount, 11, 100, recommendationDataArray);
   createMultipleData(lowScoreAmount, -5, 10, recommendationDataArray);
 
-  await prisma.recommendation.createMany({ data: recommendationDataArray });
+  await testRepository.createMany(recommendationDataArray);
 }

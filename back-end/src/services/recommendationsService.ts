@@ -19,20 +19,6 @@ async function insert(createRecommendationData: CreateRecommendationData) {
   await recommendationRepository.create(createRecommendationData);
 }
 
-async function create(amount: number, score: number) {
-  if (amount === 1) {
-    if (score > -Infinity) {
-      await createScenarioWithARecommendationSpecificVote(score);
-      return;
-    }
-
-    await createScenarioWithARecommendation();
-    return;
-  }
-
-  await createScenarioWithManyAmountsAndDistribuitedScore(amount, score);
-}
-
 async function upvote(id: number) {
   await getByIdOrFail(id);
 
@@ -101,18 +87,12 @@ function getScoreFilter(random: number) {
   return "lte";
 }
 
-async function removeAll() {
-  await recommendationRepository.removeAll();
-}
-
 export const recommendationService = {
   insert,
-  create,
   upvote,
   downvote,
   getRandom,
   get,
   getById: getByIdOrFail,
   getTop,
-  removeAll,
 };

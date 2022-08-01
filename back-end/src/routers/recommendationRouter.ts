@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { recommendationController } from "../controllers/recommendationController.js";
+import { testController } from "../controllers/testController.js";
 
 const recommendationRouter = Router();
 
@@ -12,8 +13,8 @@ recommendationRouter.post("/:id/upvote", recommendationController.upvote);
 recommendationRouter.post("/:id/downvote", recommendationController.downvote);
 
 if (process.env.NODE_ENV === "test") {
-  recommendationRouter.post("/reset", recommendationController.removeAll);
-  recommendationRouter.post("/create/:amount", recommendationController.create);
+  recommendationRouter.post("/reset", testController.removeAll);
+  recommendationRouter.post("/create/:amount", testController.create);
 }
 
 export default recommendationRouter;
