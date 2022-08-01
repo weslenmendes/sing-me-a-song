@@ -13,6 +13,7 @@ recommendationRouter.post("/:id/downvote", recommendationController.downvote);
 
 if (process.env.NODE_ENV === "test") {
   recommendationRouter.post("/reset", recommendationController.removeAll);
+  recommendationRouter.post("/create/:amount", recommendationController.create);
 }
 
 export default recommendationRouter;

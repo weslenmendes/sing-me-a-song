@@ -1,17 +1,36 @@
 import { Recommendation } from "@prisma/client";
 import { recommendationRepository } from "../repositories/recommendationRepository.js";
 import { conflictError, notFoundError } from "../utils/errorUtils.js";
+import {
+  createScenarioWithARecommendationSpecificVote,
+  createScenarioWithARecommendation,
+  createScenarioWithManyAmountsAndDistribuitedScore,
+} from "../../tests/utils/scenariosUtils.js";
 
 export type CreateRecommendationData = Omit<Recommendation, "id" | "score">;
 
 async function insert(createRecommendationData: CreateRecommendationData) {
   const existingRecommendation = await recommendationRepository.findByName(
-    createRecommendationData.name,
+    createRecommendationData.name
   );
   if (existingRecommendation)
     throw conflictError("Recommendations names must be unique");
 
   await recommendationRepository.create(createRecommendationData);
+}
+
+async function create(amount: number, score: number) {
+  if (amount === 1) {
+    if (score > -Infinity) {
+      await createScenarioWithARecommendationSpecificVote(score);
+      return;
+    }
+
+    await createScenarioWithARecommendation();
+    return;
+  }
+
+  await createScenarioWithManyAmountsAndDistribuitedScore(amount, score);
 }
 
 async function upvote(id: number) {
@@ -25,7 +44,7 @@ async function downvote(id: number) {
 
   const updatedRecommendation = await recommendationRepository.updateScore(
     id,
-    "decrement",
+    "decrement"
   );
 
   if (updatedRecommendation.score < -5) {
@@ -88,6 +107,7 @@ async function removeAll() {
 
 export const recommendationService = {
   insert,
+  create,
   upvote,
   downvote,
   getRandom,

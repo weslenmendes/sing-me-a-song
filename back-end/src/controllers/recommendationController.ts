@@ -14,6 +14,15 @@ async function insert(req: Request, res: Response) {
   res.sendStatus(201);
 }
 
+async function create(req: Request, res: Response) {
+  const amount = parseInt(req.params.amount) || 1;
+  const score = Number(req.query.score) || 0;
+
+  await recommendationService.create(amount, score);
+
+  res.sendStatus(201);
+}
+
 async function upvote(req: Request, res: Response) {
   const { id } = req.params;
 
@@ -62,6 +71,7 @@ async function removeAll(_req: Request, res: Response) {
 
 export const recommendationController = {
   insert,
+  create,
   upvote,
   downvote,
   random,

@@ -2,10 +2,10 @@ import recommendationsFactory from "../factories/recommendationsFactory.js";
 import prisma from "../../src/database.js";
 
 export const createScenarioWithARecommendation = async () => {
-  const recomendation = recommendationsFactory.createARecommendation();
+  const recommendation = recommendationsFactory.createARecommendation();
 
   const createRecommendation = await prisma.recommendation.create({
-    data: recomendation,
+    data: recommendation,
     select: {
       id: true,
       name: true,
